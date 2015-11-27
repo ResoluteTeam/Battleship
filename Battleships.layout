@@ -4,6 +4,8 @@ CursorCol=1
 CursorRow=52
 TopLine=38
 =======
+Open=0
+Top=0
 [Editor_0]
 <<<<<<< HEAD
 CursorCol=20
@@ -40,8 +42,8 @@ Top=0
 Open=1
 Top=1
 <<<<<<< HEAD
-CursorCol=20
-CursorRow=25
+CursorCol=31
+CursorRow=24
 TopLine=1
 =======
 CursorCol=26
