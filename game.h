@@ -7,6 +7,7 @@
 #include "iostream"
 #include "vector"
 
+
 class Game
 {
 public:
@@ -18,6 +19,10 @@ private:
     void processEvents();
     void render();
     void update();
+    
+    int** playerField;
+    int** AIField;
+    int SIZE;
     
     bool exit;
 };

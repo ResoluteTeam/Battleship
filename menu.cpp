@@ -1,20 +1,19 @@
 #include "menu.h"
 
 Menu::Menu(){
-    initwindow(640,480,"AntiTetris",100,100,true,true); 
-    bkcolor = LIGHTCYAN;
+    initwindow(640,480,"BattleShip",100,100,true,true); 
     
-    logo.setText("AntiTetris");
-    logo.setColor(bkcolor, BLUE);
-    logo.setPosition(120, 10);
-    logo.setSize(2);
+    logo.setText("BattleShip");
+    logo.setColor(COLOR(200,225,255), COLOR(102,205,170));
+    logo.setPosition(110, 50);
+    logo.setSize(0);
     
     startBtn.setCaption("Start!");
-    startBtn.setColor(6, GREEN);
+    startBtn.setColor(COLOR(200,225,255), COLOR(102,205,170));
     startBtn.setPosition(30,300);
     
     exitBtn.setCaption("Exit!");
-    exitBtn.setColor(6, GREEN);
+    exitBtn.setColor(COLOR(200,225,255), COLOR(102,205,170));
     exitBtn.setPosition(350,300);
     
     buttonIndex = 0;
@@ -22,13 +21,14 @@ Menu::Menu(){
     
     blinkVal = 100000;   
     flag = true;  
+    settextstyle(10, 0, 7);
 }
 
 int Menu::start(){
     exit = false;
     status = 1;
     int frames = 500, i = 0;
-    settextstyle(0,HORIZ_DIR,10);
+
     
     while(!exit)
     {
@@ -46,10 +46,15 @@ int Menu::start(){
 
 void Menu::render(){
     cleardevice();  
-    setbkcolor(bkcolor);
-    setfillstyle(SOLID_FILL, LIGHTCYAN);
+    setfillstyle(SOLID_FILL, COLOR(200,225,255));
     bar(0,0,getmaxx(),getmaxy());
+    setbkcolor(COLOR(200,225,255));
+
+    
+//    setfillstyle(SOLID_FILL, COLOR(200,225,255));
+    setcolor(COLOR(126, 192,238));
     logo.draw();
+
     startBtn.draw();
     exitBtn.draw();
     swapbuffers();

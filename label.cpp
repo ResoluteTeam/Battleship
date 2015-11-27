@@ -13,7 +13,6 @@ void Label::draw(){
     {
         //setusercharsize(size,1,size,1);
         //settextstyle(0,HORIZ_DIR,0);
-        setbkcolor(bkcolor);
         setcolor(color);
         outtextxy(x, y, caption); 
     }   

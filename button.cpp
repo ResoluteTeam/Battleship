@@ -24,7 +24,6 @@ void Button::draw(){
     setfillstyle(SOLID_FILL, color);
     bar(_x, _y, _x + 265, _y + 120);
     caption.draw();
-    setcolor(RED);
     if(focus)
         rectangle(_x, _y, _x + 265, _y + 120);
 }
