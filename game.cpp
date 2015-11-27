@@ -27,14 +27,13 @@ int Game::start()
     
     int frames = 50000, i = 0;
     
-    while(!exit)
-    {
+    while(!exit) {
         delay(100);
         processEvents();
         update();
-        render(); 
-
+        render();
     }
+    
     closegraph();
     return 0;
 }
@@ -65,8 +64,8 @@ void Game::render()
     setcolor(COLOR(164,211,238));
     setlinestyle(SOLID_LINE, 0,NORM_WIDTH);
     for ( int i = 0; i < 25; i++ ) {
-        line(i*26, 0, i*26, 468);
-        line(0, i*26, 650, i*26);
+        line(i*26, 0, i*26, 466);
+        line(0, i*26, 648, i*26);
     }
     
     setcolor(COLOR(0,0, 150));
