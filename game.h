@@ -6,6 +6,7 @@
 #include "graphics.h"
 #include "iostream"
 #include "vector"
+#include "ship.h"
 
 
 class Game
@@ -22,6 +23,9 @@ private:
     
     int** playerField;
     int** AIField;
+    
+    Ship* ship;
+    
     int SIZE;
     
     bool exit;

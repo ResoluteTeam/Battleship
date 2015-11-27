@@ -19,6 +19,11 @@ Game::Game()
             AIField[i][j] = 0;
         }
     }
+    
+    ship = new Ship(playerField, 4);
+    ship->setCoordinates(5,4);
+    ship->rotate();
+    ship->draw();
 }
 
 int Game::start()
