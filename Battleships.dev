@@ -1,7 +1,7 @@
 [Project]
 FileName=Battleships.dev
 Name=Battleships
-UnitCount=9
+UnitCount=11
 Type=1
 Ver=1
 ObjFiles=
@@ -136,4 +136,24 @@ OriginalFilename=
 ProductName=
 ProductVersion=
 AutoIncBuildNr=0
+
+[Unit10]
+FileName=ship.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit11]
+FileName=ship.cpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
 

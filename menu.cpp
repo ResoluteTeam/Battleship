@@ -50,8 +50,6 @@ void Menu::render(){
     bar(0,0,getmaxx(),getmaxy());
     setbkcolor(COLOR(200,225,255));
 
-    
-//    setfillstyle(SOLID_FILL, COLOR(200,225,255));
     setcolor(COLOR(126, 192,238));
     logo.draw();
 
