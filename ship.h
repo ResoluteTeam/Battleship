@@ -12,12 +12,16 @@ public:
         int getX();
         int getY();
        
-        void draw();
+        bool draw();
        
+        bool check(int _x, int _y);
         void rotate();
+        void setSize(int sz);
+        void setField(int **fld, int mSize);
        
 private:
         int** field;
+        int matrixSize;
         int size;
         int x,y;
         bool dir;      
