@@ -353,7 +353,9 @@ void Game::update()
             if ( !ships.empty() ) {
                 ship->setField(matrix, 4);
                 ship->setSize(ships.back());
-                
+                for(int i = 0; i < 4; i++)
+                    for(int j = 0; j < 4; j++)
+                        matrix[i][j] = 0;
                 ship->setCoordinates(0,0);
                 ship->draw();
                 waitForPlayer = true;
