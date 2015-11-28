@@ -4,6 +4,7 @@ Game::Game()
 {
     initwindow(650,468,"Play BattleShip",100,100,true,true);
 
+    //====================Создание и настройка параметров надписей на поле=========
     settextstyle(10, 0, 9);
     setbkcolor(COLOR(200,225,255));
     
@@ -12,6 +13,14 @@ Game::Game()
     label->setVisible(false);
     label->setPosition(40, 150);
     
+    settextstyle(10, 0, 7);
+    setbkcolor(COLOR(200,225,255));
+    
+    esc = new Label();
+    esc->setColor(COLOR(200,225,255), COLOR(0,0,150));
+    esc->setText("Press Esc to return in the menu");
+    esc->setPosition(40, 235);
+    esc->setVisible(false);
     
     settextstyle(7, 0, 3);
     setbkcolor(COLOR(230,225,255));
@@ -44,6 +53,7 @@ Game::Game()
     info->setText("Press Space to rotate");
     info->setVisible(true);
     
+    //==============================================================================
     SIZE = 10;
     
     status = false;
@@ -54,6 +64,8 @@ Game::Game()
     
     srand(time(0));
     
+    
+    //===============================Создание полей игрока и компьютера и заполнение их пустыми клетками============
     playerField = new int* [SIZE];
     AIField = new int* [SIZE];
     matrix = new int* [4];
@@ -69,7 +81,7 @@ Game::Game()
             AIField[i][j] = 0;
         }
     }
-    
+    //=========================Создание и заполнение маленького поля(4х4) пустыми значениями
     for ( int i = 0; i < 4; i++ ) {
             matrix[i] = new int[4];
     }
@@ -79,6 +91,10 @@ Game::Game()
             matrix[i][j] = 0;
         }
     }
+    
+    
+    
+    //====== Содаем список кораблей, далее будем использывать его при расстановке
     ship = new Ship(matrix, 1);
     
     initAIField();
@@ -97,7 +113,7 @@ Game::Game()
     
     ships.push_back(4);
     
-
+    //=======================================================================================
 }
 
 int Game::start()
@@ -108,9 +124,9 @@ int Game::start()
     
     while(!exit) {
         delay(100);
-        processEvents();
-        update();
-        render();
+        processEvents(); //Взаимодействие с пользовалелем
+        update(); // Обновления информации
+        render(); // Отрисовка
     }
     
     closegraph();
@@ -119,16 +135,16 @@ int Game::start()
 
 void Game::processEvents()
 {
-    if(kbhit() || ismouseclick(WM_LBUTTONDOWN))
+    if(kbhit() || ismouseclick(WM_LBUTTONDOWN)) // Виполняем при нажатии кнопки клавиатуры или мыши и выполняем определенные действия далее по условиям
     {      
         if(kbhit()) {
             char key = getch();
-            if(key == 27)
+            if(key == 27) // При нажатии Esc выходим в меню
             {
                 exit = true;
             } 
-            if ( key == ' ' ) {
-                if ( !status ) {
+            if ( key == ' ' ) { // При нажати пробела 
+                if ( !status ) { // и если игра еще не начата -
                     if ( waitForPlayer ) {
                         for (int i = 0; i < 4; i++ ) {
                             for ( int j = 0; j < 4; j++ ) {
@@ -136,8 +152,8 @@ void Game::processEvents()
                             }
                         }
                         
-                        ship->rotate();
-                        ship->draw();
+                        ship->rotate(); // Поворачиваем корабль
+                        ship->draw(); // и отрисовываем его на маленьком поле
                         
                     }
                 }
@@ -148,11 +164,10 @@ void Game::processEvents()
             getmouseclick(WM_LBUTTONDOWN, mouseX, mouseY);
             
             
-            if ( status ) {
-                if (waitForPlayer) {
-                    if ( mouseX > 364 && mouseX < 624 && mouseY > 56 && mouseY < 312 ) {
-                        std::cout << "X:" << mouseX << "Y:" << mouseY << std::endl;
-                        
+            if ( status ) { //Если в игре
+                if (waitForPlayer) { // и ход игрока
+                    if ( mouseX > 364 && mouseX < 624 && mouseY > 56 && mouseY < 312 ) { //считываем координаты мышки
+                        //========== Расчитываем позицию в массиве, куда кликнули мышкой
                         double a, b, xx, yy;
                     
                         a = mouseX/26;
@@ -160,22 +175,20 @@ void Game::processEvents()
                     
                         std::modf(a, &xx);
                         std::modf(b, &yy);
-                        std::cout << "Position: " << a << ":" << b << std::endl;
                     
                         x = (int)xx - 1 - 13;
                         y = (int)yy - 1 - 1;
-                        
-                        if ( shoot(x, y, AIField) ) {
-                            waitForPlayer = false;
+                        //==================================================================
+                        if ( shoot(x, y, AIField) ) { //Стреляем
+                            waitForPlayer = false; // Передаем ход компьютеру
                         }
                     }
                     
                     
                 }
             } else {
-                if (waitForPlayer) {
-                    if ( mouseX > 26 && mouseX < 294 && mouseY > 56 && mouseY < 312 ) {
-                        std::cout << "X:" << mouseX << "Y:" << mouseY;
+                if (waitForPlayer) { // Иначе - не в игре (в режиме расстановки кораблей) и ход игрока
+                    if ( mouseX > 26 && mouseX < 294 && mouseY > 56 && mouseY < 312 ) { //так же считывае координаты и далее расчитываем куда нажали в массиве
                         
                         double a, b, xx, yy;
                         
@@ -184,18 +197,15 @@ void Game::processEvents()
                     
                         std::modf(a, &xx);
                         std::modf(b, &yy);
-                        std::cout << "Position: " << a << ":" << b << std::endl;
-                        
                     
                         x = (int)xx - 1;
                         y = (int)yy - 1 - 1;
                         
-                        ship->setField(playerField, 10);
-                        ship->setCoordinates(x, y);
+                        ship->setField(playerField, 10); 
+                        ship->setCoordinates(x, y); //Ставим корабль куда кликнули мышкой
                         
-                        
-                        if ( ship->draw() ) {
-                            ships.pop_back();
+                        if ( ship->draw() ) { // Рисуем его
+                            ships.pop_back(); //Берем из списка следующий колабль
                         }
     
                         waitForPlayer = false;
@@ -208,33 +218,39 @@ void Game::processEvents()
 
 void Game::render()
 {
-    setfillstyle(SOLID_FILL, COLOR(230,225,255));
-    bar(0,0,getmaxx(),getmaxy());
+    setfillstyle(SOLID_FILL, COLOR(230,225,255)); // Выставляем стил
+    bar(0,0,getmaxx(),getmaxy()); // Рисуем фон
     
-    settextstyle(7, 0, 3);
+    settextstyle(7, 0, 3); 
     setbkcolor(COLOR(230,225,255)); 
            
-    republic->draw();
-    republic2->draw();
+    republic->draw(); // 
+    republic2->draw(); // Отрисовка надписей "Республика" 
     
     
-    
+    //==================Отрисовка цифр между полями (от 1 до 10)
     for ( int i = 0; i < 10; i++ ) {
         l1->setPosition(315, 56 + i*26);
         char ww[3];
         itoa(i + 1,ww,10);
         l1->setText(ww);
         l1->draw();
-    }
+    } 
     
+    //=============================================================
+    
+    
+    //=======================Рисуем сетку================
     setcolor(COLOR(164,211,238));
     setlinestyle(SOLID_LINE, 0, NORM_WIDTH);
     for ( int i = 0; i < 25; i++ ) {
         line(i*26, 0, i*26, 466);
         line(0, i*26, 648, i*26);
     }
+    //====================================================
     
     
+    //===================Рисуем 2 поля================
     setcolor(COLOR(0,0, 150));
     setlinestyle(SOLID_LINE, 0, THICK_WIDTH);
     for(int i = 0; i <= SIZE; i++) {
@@ -245,12 +261,18 @@ void Game::render()
         line(364, 52 + i*26, 624, 52 + i*26);
         
     }
+    //==================================================
     
+    
+    //=================Рисуем маленькое поле снизу===============
     for ( int i = 0; i <= 4; i++ ) {
             line(26 + i*26, 338, 26 + i*26, 442);
             line(26, 338 + i*26, 130, 338 + i*26);
     }
+    //===========================================================
     
+
+    //======================Рисуем корабли на маленьком поле===============
     for ( int i = 0; i < 4; i++ ) {
         for ( int j = 0; j < 4; j++ ) {
             if ( matrix[i][j] == 1 ) {
@@ -259,16 +281,24 @@ void Game::render()
             }
         }
     }
+    //=================================================================
     
     
+    //==========================Отрисовка кораблей и выстрелов на поле игрока==================
     for (int i = 0; i < SIZE; i++){
         for (int j = 0; j < SIZE; j++) {
-            if ( playerField[i][j] == 1 ) {
+            if ( playerField[i][j] == 1 ) { 
                 setfillstyle(SOLID_FILL, COLOR(104, 131, 139));
                 bar(28 + i*26, 28 + (j+1)*26, 26 + i*26 + 25, 26 + (j+1)*26 + 25);
             }
             if ( playerField[i][j] == -1 ) {
                 setfillstyle(SOLID_FILL, COLOR(104, 131, 139));
+                bar(28 + i*26, 28 + (j+1)*26, 26 + i*26 + 25, 26 + (j+1)*26 + 25);
+                line(28 + i*26, 28 + (j+1)*26, 26 + i*26 + 25, 26 + (j+1)*26 + 25);
+                line(28 + i*26 + 22, 28 + (j+1)*26, 26 + i*26 + 1, 26 + (j+1)*26 + 25);
+            }
+            if ( playerField[i][j] == -2 ) {
+                setfillstyle(SOLID_FILL, COLOR(255, 131, 139));
                 bar(28 + i*26, 28 + (j+1)*26, 26 + i*26 + 25, 26 + (j+1)*26 + 25);
                 line(28 + i*26, 28 + (j+1)*26, 26 + i*26 + 25, 26 + (j+1)*26 + 25);
                 line(28 + i*26 + 22, 28 + (j+1)*26, 26 + i*26 + 1, 26 + (j+1)*26 + 25);
@@ -279,7 +309,9 @@ void Game::render()
             } 
         }   
     }
-
+    //=======================================================================================
+    
+    //===========================Отрисовка кораблей и выстрелов на поле комьютера====================
     for (int i = 0; i < SIZE; i++){
         for (int j = 0; j < SIZE; j++) {
             if ( AIField[i][j] == -1 ) {
@@ -288,17 +320,23 @@ void Game::render()
                 line(366 + i*26, 28 + (j+1)*26, 364 + i*26 + 25, 26 + (j+1)*26 + 25);
                 line(366 + i*26 + 22, 28 + (j+1)*26, 364 + i*26 + 1, 26 + (j+1)*26 + 25);
             }
+            if ( AIField[i][j] == -2 ) {
+                setfillstyle(SOLID_FILL, COLOR(255, 131, 139));
+                bar(366 + i*26, 28 + (j+1)*26, 364 + i*26 + 25, 26 + (j+1)*26 + 25);
+                line(366 + i*26, 28 + (j+1)*26, 364 + i*26 + 25, 26 + (j+1)*26 + 25);
+                line(366 + i*26 + 22, 28 + (j+1)*26, 364 + i*26 + 1, 26 + (j+1)*26 + 25);
+            }
             if ( AIField[i][j] == 2 ) {
                 setfillstyle(SOLID_FILL, COLOR(104, 131, 139));
                 fillellipse(366 + i*26 + 12, 28 + (j+1)*26 + 12, 5, 5);
             }
-            
-//            if ( AIField[i][j] == 1 ) {
-//                setfillstyle(SOLID_FILL, COLOR(104, 131, 139));
-//                bar(366 + i*26, 28 + (j+1)*26, 364 + i*26 + 25, 26 + (j+1)*26 + 25);
-//            }
         }   
     }
+    
+    //==============================================================================
+    
+    
+    //=====Отрисовка текста==========
     settextstyle(10, 0, 2);
     setbkcolor(COLOR(230,225,255));
     info->draw();
@@ -307,23 +345,27 @@ void Game::render()
     settextstyle(10, 0, 9);
     setbkcolor(COLOR(200,225,255));
     label->draw();
+    settextstyle(9, 0, 4);
+    esc->draw();
+    //==============================
     
-    swapbuffers();
+    swapbuffers(); //Очистка буфера
 }
 
 void Game::update()
 {
-    if ( status ) {
+    if ( status ) { //Если в игре
         stat->setText("Shoot! ");
         info->setText(" ");
-        if(!waitForPlayer)
+        if(!waitForPlayer) //Если ход компьютера
         {
-            if ( shoot(rand()%10, rand()%10, playerField) ) {
-                waitForPlayer = true;
+            if ( shoot(rand()%10, rand()%10, playerField) ) { //стреляет
+                waitForPlayer = true; //передает ход иггроку
             }
         }
         playerWin = true;
         AIWin = true;
+        //Проверка на победу 
         for ( int i = 0; i < SIZE; i++ ) {
             for ( int j = 0; j < SIZE; j++ ) {
                 if ( AIField[i][j] == 1 ) {
@@ -335,29 +377,31 @@ void Game::update()
                 }
             }
         }
-        
+        //==============И в зависимости от этого пишем кто победил=======
         if ( playerWin ) {
             label->setText("You WIN!!!");
             label->setVisible(true);
+            esc->setVisible(true);
             
         }
         
         if ( AIWin ) {
             label->setText("You LOSE!!!");
             label->setVisible(true);
+            esc->setVisible(true);
         }
+        //=================================================================
         
-        
-    } else {
+    } else { //Если не в игре
         if ( !waitForPlayer ) {
-            if ( !ships.empty() ) {
+            if ( !ships.empty() ) { //Если не расставлены все корабли
                 ship->setField(matrix, 4);
                 ship->setSize(ships.back());
                 for(int i = 0; i < 4; i++)
                     for(int j = 0; j < 4; j++)
                         matrix[i][j] = 0;
-                ship->setCoordinates(0,0);
-                ship->draw();
+                ship->setCoordinates(0,0); // Ставим корабль
+                ship->draw(); // Рисуем его
                 waitForPlayer = true;
             } else { 
                 status = true;
@@ -369,6 +413,9 @@ void Game::update()
 
 void Game::initAIField() 
 {
+    
+    //=====Заполняем список кораблей=====
+    
     ships.push_back(1);
     ships.push_back(1);
     ships.push_back(1);
@@ -382,7 +429,9 @@ void Game::initAIField()
     ships.push_back(3);
     
     ships.push_back(4);
+    //=======================================
     
+    //=============Автоматизированая расстановка кораблей копьютером=============
     ship->setField(AIField, 10);
     while ( !ships.empty() ) {
         ship->setSize(ships.back());
@@ -398,112 +447,122 @@ void Game::initAIField()
             ships.pop_back();
         }
     }
+    
+    //============================================================================
 }
 
 bool Game::shoot(int _x, int _y, int** fld) 
-{
-    if ( fld[_x][_y] != 2 && fld[_x][_y] != -1 ) {
-        if ( fld[_x][_y] == 0 ) {
-            fld[_x][_y] = 2;
+{    
+    //======Обработка выстрелов========
+    if ( fld[_x][_y] != 2 && fld[_x][_y] != -1 ) { //Если в точку еще не стреляли и там нет потбитого корабля
+        if ( fld[_x][_y] == 0 ) { // Если пустая клетка 
+            fld[_x][_y] = 2; //Ставим точку
             return true;
         }
-        if ( fld[_x][_y] == 1 ) {
-            fld[_x][_y] = -1;
+        if ( fld[_x][_y] == 1 ) { //Если стоит корабль
+            fld[_x][_y] = -1; //Ранили
+            checkIfDead(_x,_y,fld); //Проверка на убит ли корабль
             return false;
         }
     } else { 
         return false;
     }
+    //=================================
 }
 
 bool Game::checkIfDead(int _x, int _y, int** fld)
-{
+{  
     std::vector<pos*> ppos;
-    
+    ppos.clear();
     pos* temp;
+    int posX, posY;
+
+    temp = new pos;
+    temp->x = _x;
+    temp->y = _y;
+    ppos.push_back(temp);
+
+    bool upOk = true, downOk = true, leftOk = true, rightOk = true;
     
-    int i = _x;
-    int j = _y;
-    bool check = false;
-    
-    while( fld[i][j+1] != 0 || fld[i][j+1] != 2 ) {
-        if (j < 8) {
-                if ( fld[i][j+1] == 1 || fld[i][j+1] == -1 ) {
-                    temp = new pos;
-                    temp->x = i;
-                    temp->y = j+1;
-                    
-                    ppos.push_back(temp);
-                }
-            } else {
-                break;
-        }
-        j++;
-    }
-    
-    i = _x;
-    j = _y;
-    
-    while( fld[i][j-1] != 0 || fld[i][j-1] != 2 ) {
-        if (j > 1) {
-            if ( fld[i][j-1] == 1 || fld[i][j-1] == -1 ) {
-            
-                temp = new pos;
-                temp->x = i;
-                temp->y = j-1;
-                
-                ppos.push_back(temp);
-            } else {
-                break;
+    for(int i = 1; i < 4; i++)
+    {
+        //--------- Смотрим есть ли справа кусок корабля
+        if(_x+i <= 9 && rightOk)
+        {
+            if(fld[_x+i][_y] == 1 ) {
+                return 0;
+            }
+            if(fld[_x+i][_y] == 2 || fld[_x+i][_y] == 0) {
+                rightOk = false;
             }
             
-        }
-        j--;
-    }
-    
-    i = _x;
-    j = _y;
-    
-    while( fld[i+1][j] != 0 || fld[i+1][j] != 2 ) {
-        if (i < 8) {
-            if ( fld[i+1][j] == 1 || fld[i+1][j] == -1 ) {
-             
+            if(fld[_x+i][_y] == -1 && rightOk) {
                 temp = new pos;
-                temp->x = i+1;
-                temp->y = j;
-                
+                temp->x = _x+i;
+                temp->y = _y;
                 ppos.push_back(temp);
             }
-        } else {
-            break;
         }
-        i++;
-    }
-    
-    i = _x;
-    j = _y;
-    
-    while( fld[i-1][j] != 0 || fld[i-1][j] != 2 ) {
-        if (i > 1) { 
-            if ( fld[i-1][j] == 1 || fld[i-1][j] == -1 ) {
-            
+        //---------- Смотрим есть ли слева кусок корабля
+        if(_x-i >= 0 && leftOk) 
+        {      
+            if(fld[_x-i][_y] == 1) {
+                return 0;
+            }
+            if(fld[_x-i][_y] == 2 || fld[_x-i][_y] == 0) {
+                leftOk = false;
+            }  
+            if(fld[_x-i][_y] == -1 && leftOk) {
                 temp = new pos;
-                temp->x = i-1;
-                temp->y = j;
-                
+                temp->x = _x-i;
+                temp->y = _y;
                 ppos.push_back(temp);
             }
-        } else {
-            break;
         }
-        i--;
+        //---------- Смотри есть ли снизу кусок корабля
+        if(_y+i<=9 && downOk)
+        {      
+            if(fld[_x][_y+i] == 1) {
+                return 0;
+            }
+            if(fld[_x][_y+i] == 2 || fld[_x][_y+i] == 0) {
+                downOk = false;
+            }       
+            if(fld[_x][_y+i] == -1 && downOk) {
+                temp = new pos;
+                temp->x = _x;
+                temp->y = _y+i;
+                ppos.push_back(temp);
+            } 
+        }
+        //---------- Смотрим есть ли сверху кусок корабля
+        if(_y-i>=0 && upOk)
+        {
+            if(fld[_x][_y-i] == 1) {
+                return 0;
+            }
+            if(fld[_x][_y-i] == 2 || fld[_x][_y-i] == 0) {
+                upOk = false;
+            }
+            if(fld[_x][_y-i] == -1 && upOk) {
+                temp = new pos;
+                temp->x = _x;
+                temp->y = _y-i;
+                ppos.push_back(temp);
+            } 
+        } 
+        
+        //Ищем все куски корабля, если они все ранены - заносим в вектор его координаты и далее отрисовываем убитый корабль и область по которой нету смысла стрелять
+        //Если же хоть с какой то стороны найдеться целый кусок корабля - выходим из функции
     }
-    
     
     while (!ppos.empty()) {
-        int posX = ppos.back()->x - 1;
-        int posY = ppos.back()->y - 1;
-        ppos.pop_back();
+        pos* tmp;
+        tmp = new pos;
+        
+        tmp = ppos.back();
+        posX = tmp->x - 1;
+        posY = tmp->y - 1;
         for(int i = 0; i < 3; i++) 
             for(int j = 0; j < 3; j++)
             {
@@ -514,9 +573,13 @@ bool Game::checkIfDead(int _x, int _y, int** fld)
                 else 
                 {
                     if(fld[posX + i][posY + j] == 0)  
-                         fld[posX + i][posY + j] == 2;
+                         fld[posX + i][posY + j] = 2;
+                         
+                    if(fld[posX + i][posY + j] == -1)
+                         fld[posX + i][posY + j] = -2;
                 }
-            }    
+            }
+        ppos.pop_back();    
     }
 }
 

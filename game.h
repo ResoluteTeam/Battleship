@@ -46,7 +46,7 @@ private:
     bool status;
     bool exit;
     
-    Label *label, *republic, *republic2, *l1, *info, *stat;
+    Label *label, *republic, *republic2, *l1, *info, *stat, *esc;
 };
 
 #endif // GAME_H

@@ -5,6 +5,10 @@
 #include <iostream>
 #include "label.h"
 #include "button.h"
+#include "math.h"
+
+#define dx 10 // шаг сетки по X 
+#define dy 10 // шаг сетки по Y
 
 class Menu{
 public:
@@ -17,11 +21,13 @@ private:
         void render();
         void update();
         void processEvents(); 
+        void ship(int x, int y);
          
         int buttonIndex;
         Label logo; 
         Button startBtn, exitBtn;
         int time, blinkVal, bkcolor;
+        int x, y;
         bool flag;
         
 };
