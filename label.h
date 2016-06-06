@@ -1,8 +1,9 @@
 #ifndef LABEL_H
 #define LABEL_H
 #include "graphics.h"
+#include "object.h"
 
-class Label{
+class Label: public Object{
 public:
         Label();
         ~Label();
@@ -11,7 +12,7 @@ public:
         void setColor(int bkcol, int col);
         void setSize(int sz);
         void setVisible(bool value);
-        void draw();
+        virtual void draw();
 private:
         char *caption;
         int x, y, bkcolor, color, size;

@@ -6,6 +6,7 @@
 #include "label.h"
 #include "button.h"
 #include "math.h"
+#include "compositeObjects.h"
 
 #define dx 10 // шаг сетки по X 
 #define dy 10 // шаг сетки по Y
@@ -16,6 +17,8 @@ public:
        int start();
 
 private:
+        CompositeObjects* objects;
+        
         int status;
         bool exit;
         void render();
@@ -24,8 +27,8 @@ private:
         void ship(int x, int y);
          
         int buttonIndex;
-        Label logo; 
-        Button startBtn, exitBtn;
+        Label* logo; 
+        Button *startBtn, *exitBtn;
         int time, blinkVal, bkcolor;
         int x, y;
         bool flag;

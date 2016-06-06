@@ -3,14 +3,15 @@
 
 #include "graphics.h"
 #include "label.h"
+#include "object.h"
 
-class Button{
+class Button: public Object{
 public:
         Button();
         void setCaption(std::string text);
         void setPosition(int x, int y);
         void setColor(int bkcolor, int textcolor);
-        void draw();
+        virtual void draw();
         void setFocus(bool focused);
                 
 private:

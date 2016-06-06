@@ -3,21 +3,29 @@
 Menu::Menu(){
     initwindow(640,480,"BattleShip",100,100,true,true); 
     
-    logo.setText("BattleShip");
-    logo.setColor(COLOR(200,225,255), COLOR(102,205,170));
-    logo.setPosition(120, 70);
-    logo.setSize(0);
+    objects = new CompositeObjects();
     
-    startBtn.setCaption("Start!");
-    startBtn.setColor(COLOR(200,225,255), COLOR(102,205,170));
-    startBtn.setPosition(30,180);
+    logo = new Label();
+    logo->setText("BattleShip");
+    logo->setColor(COLOR(200,225,255), COLOR(102,205,170));
+    logo->setPosition(120, 70);
+    logo->setSize(0);
+    objects->addObject(logo);
     
-    exitBtn.setCaption("Exit!");
-    exitBtn.setColor(COLOR(200,225,255), COLOR(102,205,170));
-    exitBtn.setPosition(350,180);
+    startBtn = new Button();
+    startBtn->setCaption("Start!");
+    startBtn->setColor(COLOR(200,225,255), COLOR(102,205,170));
+    startBtn->setPosition(30,180);
+    objects->addObject(startBtn);
+    
+    exitBtn = new Button();
+    exitBtn->setCaption("Exit!");
+    exitBtn->setColor(COLOR(200,225,255), COLOR(102,205,170));
+    exitBtn->setPosition(350,180);
+    objects->addObject(exitBtn);
     
     buttonIndex = 0;
-    startBtn.setFocus(true);
+    startBtn->setFocus(true);
     time = 1000;
 
     
@@ -61,15 +69,11 @@ void Menu::render(){
     }
     
     setbkcolor(COLOR(200,225,255));
-
     setcolor(COLOR(126, 192,238));
-    logo.draw();
-    
+
+    objects->draw();
     
     ship(x + buttonIndex * 320, y);
-    
-    startBtn.draw();
-    exitBtn.draw();
     swapbuffers();
 }
 
@@ -157,13 +161,13 @@ void Menu::processEvents(){
             
             if(buttonIndex == 1)
             {
-                exitBtn.setFocus(true);
-                startBtn.setFocus(false);
+                exitBtn->setFocus(true);
+                startBtn->setFocus(false);
             }
             else
             {
-                exitBtn.setFocus(false);
-                startBtn.setFocus(true);
+                exitBtn->setFocus(false);
+                startBtn->setFocus(true);
             }
         }
     }    
