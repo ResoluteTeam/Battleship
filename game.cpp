@@ -1,5 +1,7 @@
 #include "game.h"
 
+int ProxyField::next_id = 1;
+
 Game::Game()
 {
     initwindow(650,468,"Play BattleShip",100,100,true,true);
@@ -69,6 +71,9 @@ Game::Game()
     playerField = new int* [SIZE];
     AIField = new int* [SIZE];
     matrix = new int* [4];
+    
+    userFld = new ProxyField(26, SIZE);
+    aiFld = new ProxyField(364, SIZE);
     
     for(int count = 0; count < SIZE; count++) {
             playerField[count] = new int[SIZE];
@@ -253,14 +258,9 @@ void Game::render()
     //===================Рисуем 2 поля================
     setcolor(COLOR(0,0, 150));
     setlinestyle(SOLID_LINE, 0, THICK_WIDTH);
-    for(int i = 0; i <= SIZE; i++) {
-        line(26 + i*26, 52, 26 + i*26, 312);
-        line(26, 52 + i*26, 286, 52 + i*26);
-        
-        line(364 + i*26, 52, 364 + i*26, 312);
-        line(364, 52 + i*26, 624, 52 + i*26);
-        
-    }
+    
+    userFld->draw();
+    aiFld->draw();
     //==================================================
     
     
