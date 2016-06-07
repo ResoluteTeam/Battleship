@@ -1,5 +1,7 @@
 #include "game.h"
+//Инициализация паттерна Синглтон
 SingleShip& ship = SingleShip::getInstance();
+//----------------------------------------------
 int ProxyField::next_id = 1;
 Game::Game()
 {

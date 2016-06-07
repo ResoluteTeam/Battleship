@@ -1,7 +1,7 @@
 [Project]
 FileName=Battleships.dev
 Name=Battleships
-UnitCount=21
+UnitCount=20
 Type=1
 Ver=1
 ObjFiles=
@@ -177,27 +177,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit14]
-FileName=object.cpp
-CompileCpp=1
-Folder=
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
 [Unit15]
-FileName=object.h
-CompileCpp=1
-Folder=
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit16]
 FileName=compositeObjects.cpp
 CompileCpp=1
 Folder=
@@ -207,7 +187,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit17]
+[Unit16]
 FileName=compositeObjects.h
 CompileCpp=1
 Folder=
@@ -217,7 +197,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit18]
+[Unit17]
 FileName=realfield.h
 CompileCpp=1
 Folder=
@@ -227,8 +207,18 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
+[Unit18]
+FileName=proxyfield.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
 [Unit20]
-FileName=singleShip.cpp
+FileName=singleShip.h
 CompileCpp=1
 Folder=Battleships
 Compile=1
@@ -238,9 +228,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit19]
-FileName=proxyfield.h
+FileName=singleShip.cpp
 CompileCpp=1
-Folder=
+Folder=Battleships
 Compile=1
 Link=1
 Priority=1000
@@ -251,6 +241,16 @@ BuildCmd=
 FileName=singleShip.h
 CompileCpp=1
 Folder=Battleships
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit14]
+FileName=object.h
+CompileCpp=1
+Folder=
 Compile=1
 Link=1
 Priority=1000
