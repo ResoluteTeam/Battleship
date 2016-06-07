@@ -7,6 +7,7 @@
 #include "iostream"
 #include "vector"
 #include "ship.h"
+#include "singleShip.h"
 #include "cmath"
 #include <string>
 
@@ -34,7 +35,8 @@ private:
     int** playerField;
     int** AIField;
     
-    Ship* ship;
+    //Ship* ship;
+    
     std::vector<int> ships;
     
     int **matrix;

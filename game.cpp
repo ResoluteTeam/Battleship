@@ -1,5 +1,5 @@
 #include "game.h"
-
+SingleShip& ship = SingleShip::getInstance();
 Game::Game()
 {
     initwindow(650,468,"Play BattleShip",100,100,true,true);
@@ -95,7 +95,9 @@ Game::Game()
     
     
     //====== Содаем список кораблей, далее будем использывать его при расстановке
-    ship = new Ship(matrix, 1);
+    //ship = new Ship(matrix, 1);
+
+    ship.setField(matrix, 1);
     
     initAIField();
     
@@ -152,8 +154,8 @@ void Game::processEvents()
                             }
                         }
                         
-                        ship->rotate(); // Поворачиваем корабль
-                        ship->draw(); // и отрисовываем его на маленьком поле
+                        ship.rotate(); // Поворачиваем корабль
+                        ship.draw(); // и отрисовываем его на маленьком поле
                         
                     }
                 }
@@ -201,10 +203,10 @@ void Game::processEvents()
                         x = (int)xx - 1;
                         y = (int)yy - 1 - 1;
                         
-                        ship->setField(playerField, 10); 
-                        ship->setCoordinates(x, y); //Ставим корабль куда кликнули мышкой
+                        ship.setField(playerField, 10); 
+                        ship.setCoordinates(x, y); //Ставим корабль куда кликнули мышкой
                         
-                        if ( ship->draw() ) { // Рисуем его
+                        if ( ship.draw() ) { // Рисуем его
                             ships.pop_back(); //Берем из списка следующий колабль
                         }
     
@@ -395,13 +397,13 @@ void Game::update()
     } else { //Если не в игре
         if ( !waitForPlayer ) {
             if ( !ships.empty() ) { //Если не расставлены все корабли
-                ship->setField(matrix, 4);
-                ship->setSize(ships.back());
+                ship.setField(matrix, 4);
+                ship.setSize(ships.back());
                 for(int i = 0; i < 4; i++)
                     for(int j = 0; j < 4; j++)
                         matrix[i][j] = 0;
-                ship->setCoordinates(0,0); // Ставим корабль
-                ship->draw(); // Рисуем его
+                ship.setCoordinates(0,0); // Ставим корабль
+                ship.draw(); // Рисуем его
                 waitForPlayer = true;
             } else { 
                 status = true;
@@ -432,17 +434,17 @@ void Game::initAIField()
     //=======================================
     
     //=============Автоматизированая расстановка кораблей копьютером=============
-    ship->setField(AIField, 10);
+    ship.setField(AIField, 10);
     while ( !ships.empty() ) {
-        ship->setSize(ships.back());
-        ship->setCoordinates(rand()%9,rand()%9);
+        ship.setSize(ships.back());
+        ship.setCoordinates(rand()%9,rand()%9);
         bool rotate = rand()%2;
         
         if(rotate)
         {
-            ship->rotate();
+            ship.rotate();
         }
-        if(ship->draw())
+        if(ship.draw())
         {
             ships.pop_back();
         }
