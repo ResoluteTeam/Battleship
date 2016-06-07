@@ -22,8 +22,8 @@ Open=0
 Top=0
 [Editors]
 <<<<<<< HEAD
-Focused=2
-Order=10,9,2,3,17,18,6
+Focused=16
+Order=10,9,2,3,17,18,6,16
 [Editor_0]
 Open=0
 Top=0
@@ -45,7 +45,7 @@ TopLine=1
 LeftChar=1
 [Editor_2]
 Open=1
-Top=1
+Top=0
 <<<<<<< HEAD
 CursorCol=2
 CursorRow=337
@@ -162,8 +162,8 @@ CursorCol=21
 CursorRow=11
 TopLine=1
 LeftChar=1
-Open=0
-Top=0
+Open=1
+Top=1
 [Editor_20]
 CursorCol=16
 CursorRow=1
