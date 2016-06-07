@@ -1,5 +1,6 @@
 #include "game.h"
 SingleShip& ship = SingleShip::getInstance();
+int ProxyField::next_id = 1;
 Game::Game()
 {
     initwindow(650,468,"Play BattleShip",100,100,true,true);
@@ -70,6 +71,9 @@ Game::Game()
     AIField = new int* [SIZE];
     matrix = new int* [4];
     
+    userFld = new ProxyField(26, SIZE);
+    aiFld = new ProxyField(364, SIZE);
+    
     for(int count = 0; count < SIZE; count++) {
             playerField[count] = new int[SIZE];
             AIField[count] = new int[SIZE];
@@ -95,8 +99,6 @@ Game::Game()
     
     
     //====== Содаем список кораблей, далее будем использывать его при расстановке
-    //ship = new Ship(matrix, 1);
-
     ship.setField(matrix, 1);
     
     initAIField();
@@ -256,6 +258,8 @@ void Game::render()
     setcolor(COLOR(0,0, 150));
     setlinestyle(SOLID_LINE, 0, THICK_WIDTH);
 
+    userFld->draw();
+    aiFld->draw();
     //==================================================
     
     

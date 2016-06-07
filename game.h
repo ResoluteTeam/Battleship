@@ -6,7 +6,7 @@
 #include "graphics.h"
 #include "iostream"
 #include "vector"
-#include "ship.h"
+
 #include "singleShip.h"
 #include "cmath"
 #include <string>
