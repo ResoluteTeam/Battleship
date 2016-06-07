@@ -10,12 +10,14 @@
 #include "singleShip.h"
 #include "cmath"
 #include <string>
+#include "proxyfield.h"
 
-    struct pos{
+struct pos{
         int x;
         int y;
         };
         
+       
 class Game
 {
 public:
@@ -49,6 +51,8 @@ private:
     bool exit;
     
     Label *label, *republic, *republic2, *l1, *info, *stat, *esc;
+    
+    ProxyField *userFld, *aiFld;
 };
 
 #endif // GAME_H

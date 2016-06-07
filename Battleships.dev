@@ -217,8 +217,13 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
+<<<<<<< HEAD
 [Unit19]
 FileName=singleShip.cpp
+=======
+[Unit18]
+FileName=realfield.h
+>>>>>>> origin/master
 CompileCpp=1
 Folder=
 Compile=1
@@ -227,8 +232,23 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
+<<<<<<< HEAD
 [Unit18]
 FileName=singleShip.h
+=======
+[Unit20]
+FileName=proxyfield.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit19]
+FileName=proxyfield.h
+>>>>>>> origin/master
 CompileCpp=1
 Folder=
 Compile=1

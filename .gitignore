@@ -32,3 +32,5 @@
 Battleships.layout
 *.win
 
+*.layout
+*.dev
