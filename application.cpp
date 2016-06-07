@@ -5,7 +5,7 @@ Application::Application()
 
 }
 
-int Application::run(){
+int Application::run(){// Реализация паттерна State ------------------------------------
 
    status = MENU;
     
@@ -31,7 +31,7 @@ int Application::run(){
                 break;
         }   
     } 
-    
+    //-----------------------------------------------------------------------------------
     return 0;
     
 }

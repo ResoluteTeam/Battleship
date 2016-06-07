@@ -3,7 +3,7 @@
 Menu::Menu(){
     initwindow(640,480,"BattleShip",100,100,true,true); 
     
-    objects = new CompositeObjects();
+    objects = new CompositeObjects();//Создание обьекта-компоновщика, паттерн Composite
     
     logo = new Label();
     logo->setText("BattleShip");
@@ -71,7 +71,7 @@ void Menu::render(){
     setbkcolor(COLOR(200,225,255));
     setcolor(COLOR(126, 192,238));
 
-    objects->draw();
+    objects->draw();//Использование компоновщика
     
     ship(x + buttonIndex * 320, y);
     swapbuffers();

@@ -4,7 +4,7 @@
 #include <vector>
 #include "object.h"
 
-class CompositeObjects: public Object 
+class CompositeObjects: public Object // Компоновщик (Compositе)
 {
 public:
         CompositeObjects();

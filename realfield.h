@@ -1,7 +1,7 @@
 #ifndef REALFIELD_H
 #define REALFIELD_H
 
-class RealField
+class RealField //Реальный обьект (Паттерн Proxy)
 {
 int id;
 

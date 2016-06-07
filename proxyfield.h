@@ -3,7 +3,7 @@
 
 #include "realfield.h"
 
-class ProxyField
+class ProxyField //Класс-Заместитель (Паттерн Proxy)
 {
 RealField *realField;
 int id, size;

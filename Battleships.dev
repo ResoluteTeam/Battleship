@@ -1,7 +1,7 @@
 [Project]
 FileName=Battleships.dev
 Name=Battleships
-UnitCount=19
+UnitCount=21
 Type=1
 Ver=1
 ObjFiles=
@@ -228,9 +228,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit20]
-FileName=proxyfield.h
+FileName=singleShip.cpp
 CompileCpp=1
-Folder=
+Folder=Battleships
 Compile=1
 Link=1
 Priority=1000
@@ -241,6 +241,16 @@ BuildCmd=
 FileName=proxyfield.h
 CompileCpp=1
 Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit21]
+FileName=singleShip.h
+CompileCpp=1
+Folder=Battleships
 Compile=1
 Link=1
 Priority=1000
